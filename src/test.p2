@@ -1,0 +1,8 @@
+
+
+$foo{ 'a' } = 5;
+$foo{ 'bar' } = 'world';
+
+$bar = $foo{ 'bar' };
+
+print "Hello, $bar\n";
