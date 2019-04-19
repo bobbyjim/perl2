@@ -1,0 +1,4586 @@
+<!-- Creator     : groff version 1.22.3 -->
+<!-- CreationDate: Fri Apr 19 17:48:13 2019 -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta name="generator" content="groff -Thtml, see www.gnu.org">
+<meta http-equiv="Content-Type" content="text/html; charset=US-ASCII">
+<meta name="Content-Style" content="text/css">
+<style type="text/css">
+       p       { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       pre     { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       table   { margin-top: 0; margin-bottom: 0; vertical-align: top }
+       h1      { text-align: center }
+</style>
+<title>PERL</title>
+
+</head>
+<body>
+
+<h1 align="center">PERL</h1>
+
+<a href="#NAME">NAME</a><br>
+<a href="#SYNOPSIS">SYNOPSIS</a><br>
+<a href="#DESCRIPTION">DESCRIPTION</a><br>
+
+<hr>
+
+
+<h2>NAME
+<a name="NAME"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em">perl -
+Practical Extraction and Report Language</p>
+
+<h2>SYNOPSIS
+<a name="SYNOPSIS"></a>
+</h2>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>perl
+[options] filename args</b></p>
+
+<h2>DESCRIPTION
+<a name="DESCRIPTION"></a>
+</h2>
+
+
+
+<p style="margin-left:11%; margin-top: 1em"><b><i>Perl</i></b>
+is a interpreted language optimized for scanning arbitrary
+text files, extracting information from those text files,
+and printing reports based on that information. It&rsquo;s
+also a good language for many system management tasks. The
+language is intended to be practical (easy to use,
+efficient, complete) rather than beautiful (tiny, elegant,
+minimal). It combines (in the author&rsquo;s opinion,
+anyway) some of the best features of C, <i>sed</i>,
+<i>awk</i>, and <i>sh</i>, so people familiar with those
+languages should have little difficulty with it. (Language
+historians will also note some vestiges of <i>csh</i>,
+Pascal, and even BASIC-PLUS.) Expression syntax corresponds
+quite closely to C expression syntax. If you have a problem
+that would ordinarily use <i>sed</i> or <i>awk</i> or
+<i>sh</i>, but it exceeds their capabilities or must run a
+little faster, and you don&rsquo;t want to write the silly
+thing in C, then <i>perl</i> may be for you. There are also
+translators to turn your sed and awk scripts into perl
+scripts. OK, enough hype.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Upon startup,
+<i>perl</i> looks for your script in one of the following
+places:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>1.</p></td>
+<td width="3%"></td>
+<td width="83%">
+
+
+<p>Specified line by line via <b>&minus;e</b> switches on
+the command line.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>2.</p></td>
+<td width="3%"></td>
+<td width="83%">
+
+
+<p>Contained in the file specified by the first filename on
+the command line. (Note that systems supporting the #!
+notation invoke interpreters this way.)</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>3.</p></td>
+<td width="3%"></td>
+<td width="83%">
+
+
+<p>Passed in implicity via standard input. This only works
+if there are no filename arguments--to pass arguments to a
+stdin script you must explicitly specify a - for the script
+name.</p> </td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">After locating
+your script, <i>perl</i> compiles it to an internal form. If
+the script is syntactically correct, it is executed.</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Options</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Note: on first
+reading this section may not make much sense to you.
+It&rsquo;s here at the front for easy reference.</p>
+
+<p style="margin-left:11%; margin-top: 1em">A
+single-character option may be combined with the following
+option, if any. This is particularly useful when invoking a
+script using the #! construct which only allows one
+argument. Example:</p>
+
+
+<p style="margin-left:11%; margin-top: 1em">#!/usr/bin/perl
+-spi.bak # same as -s -p -i.bak</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>...</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">Options
+include:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em"><b>&minus;a</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p style="margin-top: 1em">turns on autosplit mode when
+used with a &minus;n or &minus;p. An implicit split command
+to the @F array is done as the first thing inside the
+implicit while loop produced by the &minus;n or
+&minus;p.</p> </td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">perl -ane
+&rsquo;print pop(@F),&quot;\n&quot;;&rsquo;</p>
+
+<p style="margin-left:18%; margin-top: 1em">is equivalent
+to</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>while (&lt;&gt;) {</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>@F = split(&rsquo; &rsquo;);</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>print pop(@F),&quot;\n&quot;;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>}</p></td></tr>
+</table>
+
+
+<p style="margin-left:11%;"><b>&minus;D&lt;number&gt;</b></p>
+
+<p style="margin-left:18%;">sets debugging flags. To watch
+how it executes your script, use <b>&minus;D14.</b> (This
+only works if debugging is compiled into your
+<i>perl</i>.)</p>
+
+<p style="margin-left:11%;"><b>&minus;e commandline</b></p>
+
+<p style="margin-left:18%;">may be used to enter one line
+of script. Multiple <b>&minus;e</b> commands may be given to
+build up a multi-line script. If <b>&minus;e</b> is given,
+<i>perl</i> will not look for a script filename in the
+argument list.</p>
+
+
+<p style="margin-left:11%;"><b>&minus;i&lt;extension&gt;</b></p>
+
+<p style="margin-left:18%;">specifies that files processed
+by the &lt;&gt; construct are to be edited in-place. It does
+this by renaming the input file, opening the output file by
+the same name, and selecting that output file as the default
+for print statements. The extension, if supplied, is added
+to the name of the old file to make a backup copy. If no
+extension is supplied, no backup is made. Saying &quot;perl
+-p -i.bak -e &quot;s/foo/bar/;&quot; ... &quot; is the same
+as using the script:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>#!/usr/bin/perl -pi.bak</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>s/foo/bar/;</p></td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">which is
+equivalent to</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>#!/usr/bin/perl</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>while (&lt;&gt;) {</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>if ($ARGV ne $oldargv) {</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p>rename($ARGV,$ARGV . &rsquo;.bak&rsquo;);</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p>open(ARGVOUT,&quot;&gt;$ARGV&quot;);</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p>select(ARGVOUT);</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p>$oldargv = $ARGV;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>}</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>s/foo/bar/;</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>continue {</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>print;</p></td>
+<td width="7%"></td>
+<td width="62%">
+
+
+<p># this prints to original filename</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>select(stdout);</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">except that the
+&minus;i form doesn&rsquo;t need to compare $ARGV to
+$oldargv to know when the filename has changed. It does,
+however, use ARGVOUT for the selected filehandle. Note that
+stdout is restored as the default output filehandle after
+the loop.</p>
+
+<p style="margin-left:18%; margin-top: 1em">You can use eof
+to locate the end of each input file, in case you want to
+append to each file, or reset line numbering (see example
+under eof).</p>
+
+
+<p style="margin-left:11%;"><b>&minus;I&lt;directory&gt;</b></p>
+
+<p style="margin-left:18%;">may be used in conjunction with
+<b>&minus;P</b> to tell the C preprocessor where to look for
+include files. By default /usr/include and /usr/lib/perl are
+searched.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>&minus;n</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p>causes <i>perl</i> to assume the following loop around
+your script, which makes it iterate over filename arguments
+somewhat like &quot;sed -n&quot; or <i>awk</i>:</p></td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">while
+(&lt;&gt;) {</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>...</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="62%">
+
+
+<p># your script goes here</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">Note that the
+lines are not printed by default. See <b>&minus;p</b> to
+have lines printed. Here is an efficient way to delete all
+files older than a week:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>find . -mtime +7 -print &#9130; perl -ne
+&rsquo;chop;unlink;&rsquo;</p> </td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">This is faster
+than using the -exec switch find because you don&rsquo;t
+have to start a process on every filename found.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em"><b>&minus;p</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p style="margin-top: 1em">causes <i>perl</i> to assume the
+following loop around your script, which makes it iterate
+over filename arguments somewhat like <i>sed</i>:</p></td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">while
+(&lt;&gt;) {</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>...</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="62%">
+
+
+<p># your script goes here</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>} continue {</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>print;</p></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">Note that the
+lines are printed automatically. To suppress printing use
+the <b>&minus;n</b> switch. A <b>&minus;p</b> overrides a
+<b>&minus;n</b> switch.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em"><b>&minus;P</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p style="margin-top: 1em">causes your script to be run
+through the C preprocessor before compilation by
+<i>perl.</i> (Since both comments and cpp directives begin
+with the # character, you should avoid starting comments
+with any words recognized by the C preprocessor such as
+&quot;if&quot;, &quot;else&quot; or &quot;define&quot;.)</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>&minus;s</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p>enables some rudimentary switch parsing for switches on
+the command line after the script name but before any
+filename arguments (or before a --). Any switch found there
+is removed from @ARGV and sets the corresponding variable in
+the <i>perl</i> script. The following script prints
+&quot;true&quot; if and only if the script is invoked with a
+-xyz switch.</p></td></tr>
+</table>
+
+
+<p style="margin-left:18%; margin-top: 1em">#!/usr/bin/perl
+-s</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>if ($xyz) { print &quot;true\n&quot;; }</p></td></tr>
+</table>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em"><b>&minus;S</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p style="margin-top: 1em">makes perl use the PATH
+environment variable to search for the script (unless the
+name of the script starts with a slash). Typically this is
+used to emulate #! startup on machines that don&rsquo;t
+support #!, in the following manner:</p></td></tr>
+</table>
+
+
+<p style="margin-left:18%; margin-top: 1em">#!/usr/bin/perl</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>eval &quot;exec /usr/bin/perl -S $0 $*&quot;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>if $running_under_some_shell;</p></td></tr>
+</table>
+
+<p style="margin-left:18%; margin-top: 1em">The system
+ignores the first line and feeds the script to /bin/sh,
+which proceeds to try to execute the perl script as a shell
+script. The shell executes the second line as a normal shell
+command, and thus starts up the perl interpreter. On some
+systems $0 doesn&rsquo;t always contain the full pathname,
+so the -S tells perl to search for the script if necessary.
+After perl locates the script, it parses the lines and
+ignores them because the variable $running_under_some_shell
+is never true.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em"><b>&minus;U</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p style="margin-top: 1em">allows perl to do unsafe
+operations. Currently the only &quot;unsafe&quot; operation
+is the unlinking of directories while running as
+superuser.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>&minus;v</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p>prints the version and patchlevel of your perl
+executable.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p><b>&minus;w</b></p></td>
+<td width="4%"></td>
+<td width="82%">
+
+
+<p>prints warnings about identifiers that are mentioned
+only once, and scalar variables that are used before being
+set. Also warns about redefined subroutines, and references
+to undefined subroutines and filehandles.</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Data Types
+and Objects</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Perl has about
+two and a half data types: scalars, arrays of scalars, and
+associative arrays. Scalars and arrays of scalars are first
+class objects, for the most part, in the sense that they can
+be used as a whole as values in an expression. Associative
+arrays can only be accessed on an association by association
+basis; they don&rsquo;t have a value as a whole (at least
+not yet).</p>
+
+<p style="margin-left:11%; margin-top: 1em">Scalars are
+interpreted as strings or numbers as appropriate. A scalar
+is interpreted as TRUE in the boolean sense if it is not the
+null string or 0. Booleans returned by operators are 1 for
+true and &rsquo;0&rsquo; or &rsquo;&rsquo; (the null string)
+for false.</p>
+
+<p style="margin-left:11%; margin-top: 1em">References to
+scalar variables always begin with &rsquo;$&rsquo;, even
+when referring to a scalar that is part of an array.
+Thus:</p>
+
+<p style="margin-left:11%; margin-top: 1em">$days # a
+simple scalar variable</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+
+
+<p>$days[28]</p><td width="17%"></td>
+<td width="-9%"></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="69%">
+
+
+<p># 29th element of array @days</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">$days{&rsquo;Feb&rsquo;} # one
+value from an associative array</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+
+
+<p>$#days</p><td width="17%"></td>
+<td width="-9%"></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="69%">
+
+
+<p># last index of array @days</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">but entire
+arrays are denoted by &rsquo;@&rsquo;:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+
+
+<p>@days</p><td width="17%"></td>
+<td width="-9%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p># ($days[0], $days[1],... $days[n])</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">Any of these
+five constructs may server as an lvalue, that is, may be
+assigned to. (You may also use an assignment to one of these
+lvalues as an lvalue in certain contexts--see s, tr and
+chop.) You may find the length of array @days by evaluating
+&quot;$#days&quot;, as in <i>csh</i>. (Actually, it&rsquo;s
+not the length of the array, it&rsquo;s the subscript of the
+last element, since there is (ordinarily) a 0th element.)
+Assigning to $#days changes the length of the array.
+Shortening an array by this method does not actually destroy
+any values. Lengthening an array that was previously
+shortened recovers the values that were in those elements.
+You can also gain some measure of efficiency by preextending
+an array that is going to get big. (You can also extend an
+array by assigning to an element that is off the end of the
+array. This differs from assigning to $#whatever in that
+intervening values are set to null rather than recovered.)
+You can truncate an array down to nothing by assigning the
+null list () to it. The following are exactly equivalent</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>@whatever = ();</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>$#whatever = $[ &minus; 1;</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">Every data type
+has its own namespace. You can, without fear of conflict,
+use the same name for a scalar variable, an array, an
+associative array, a filehandle, a subroutine name, and/or a
+label. Since variable and array references always start with
+&rsquo;$&rsquo; or &rsquo;@&rsquo;, the &quot;reserved&quot;
+words aren&rsquo;t in fact reserved with respect to variable
+names. (They ARE reserved with respect to labels and
+filehandles, however, which don&rsquo;t have an initial
+special character. Hint: you could say
+open(LOG,&rsquo;logfile&rsquo;) rather than
+open(log,&rsquo;logfile&rsquo;).) Case IS
+significant--&quot;FOO&quot;, &quot;Foo&quot; and
+&quot;foo&quot; are all different names. Names which start
+with a letter may also contain digits and underscores. Names
+which do not start with a letter are limited to one
+character, e.g. &quot;$%&quot; or &quot;$$&quot;. (Many one
+character names have a predefined significance to
+<i>perl.</i> More later.)</p>
+
+<p style="margin-left:11%; margin-top: 1em">String literals
+are delimited by either single or double quotes. They work
+much like shell quotes: double-quoted string literals are
+subject to backslash and variable substitution;
+single-quoted strings are not. The usual backslash rules
+apply for making characters such as newline, tab, etc. You
+can also embed newlines directly in your strings, i.e. they
+can end on a different line than they begin. This is nice,
+but if you forget your trailing quote, the error will not be
+reported until perl finds another line containing the quote
+character, which may be much further on in the script.
+Variable substitution inside strings is limited (currently)
+to simple scalar variables. The following code segment
+prints out &quot;The price is $100.&quot;</p>
+
+<p style="margin-left:11%; margin-top: 1em">$Price =
+&rsquo;$100&rsquo;; # not interpreted <br>
+print &quot;The price is $Price.\n&quot;;# interpreted</p>
+
+<p style="margin-left:11%; margin-top: 1em">Note that you
+can put curly brackets around the identifier to delimit it
+from following alphanumerics.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Array literals
+are denoted by separating individual values by commas, and
+enclosing the list in parentheses. In a context not
+requiring an array value, the value of the array literal is
+the value of the final element, as in the C comma operator.
+For example,</p>
+
+<p style="margin-left:11%; margin-top: 1em">@foo =
+(&rsquo;cc&rsquo;, &rsquo;&minus;E&rsquo;, $bar);</p>
+
+<p style="margin-left:11%; margin-top: 1em">assigns the
+entire array value to array foo, but</p>
+
+<p style="margin-left:11%; margin-top: 1em">$foo =
+(&rsquo;cc&rsquo;, &rsquo;&minus;E&rsquo;, $bar);</p>
+
+<p style="margin-left:11%; margin-top: 1em">assigns the
+value of variable bar to variable foo. Array lists may be
+assigned to if and only if each element of the list is an
+lvalue:</p>
+
+<p style="margin-left:11%; margin-top: 1em">($a, $b, $c) =
+(1, 2, 3);</p>
+
+
+<p style="margin-left:11%; margin-top: 1em">($map{&rsquo;red&rsquo;},
+$map{&rsquo;blue&rsquo;}, $map{&rsquo;green&rsquo;}) =
+(0x00f, 0x0f0, 0xf00);</p>
+
+<p style="margin-left:11%; margin-top: 1em">Array
+assignment returns the number of elements assigned.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Numeric
+literals are specified in any of the usual floating point or
+integer formats.</p>
+
+<p style="margin-left:11%; margin-top: 1em">There are
+several other pseudo-literals that you should know about. If
+a string is enclosed by backticks (grave accents), it first
+undergoes variable substitution just like a double quoted
+string. It is then interpreted as a command, and the output
+of that command is the value of the pseudo-literal, like in
+a shell. The command is executed each time the
+pseudo-literal is evaluated. The status value of the command
+is returned in $? (see Predefined Names for the
+interpretation of $?). Unlike in <i>csh</i>, no translation
+is done on the return data--newlines remain newlines. Unlike
+in any of the shells, single quotes do not hide variable
+names in the command from interpretation. To pass a $
+through to the shell you need to hide it with a
+backslash.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Evaluating a
+filehandle in angle brackets yields the next line from that
+file (newline included, so it&rsquo;s never false until
+EOF). Ordinarily you must assign that value to a variable,
+but there is one situation where in which an automatic
+assignment happens. If (and only if) the input symbol is the
+only thing inside the conditional of a <i>while</i> loop,
+the value is automatically assigned to the variable
+&quot;$_&quot;. (This may seem like an odd thing to you, but
+you&rsquo;ll use the construct in almost every <i>perl</i>
+script you write.) Anyway, the following lines are
+equivalent to each other:</p>
+
+<p style="margin-left:11%; margin-top: 1em">while ($_ =
+&lt;stdin&gt;) { <br>
+while (&lt;stdin&gt;) { <br>
+for (;&lt;stdin&gt;;) {</p>
+
+<p style="margin-left:11%; margin-top: 1em">The filehandles
+<i>stdin</i>, <i>stdout</i> and <i>stderr</i> are
+predefined. Additional filehandles may be created with the
+<i>open</i> function.</p>
+
+<p style="margin-left:11%; margin-top: 1em">If a
+&lt;FILEHANDLE&gt; is used in a context that is looking for
+an array, an array consisting of all the input lines is
+returned, one line per array element. It&rsquo;s easy to
+make a LARGE data space this way, so use with care.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The null
+filehandle &lt;&gt; is special and can be used to emulate
+the behavior of <i>sed</i> and <i>awk</i>. Input from
+&lt;&gt; comes either from standard input, or from each file
+listed on the command line. Here&rsquo;s how it works: the
+first time &lt;&gt; is evaluated, the ARGV array is checked,
+and if it is null, $ARGV[0] is set to &rsquo;-&rsquo;, which
+when opened gives you standard input. The ARGV array is then
+processed as a list of filenames. The loop</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while (&lt;&gt;) {</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>...</p></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="54%">
+
+
+<p># code for each line</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">is equivalent
+to</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>unshift(@ARGV, &rsquo;&minus;&rsquo;) if $#ARGV &lt;
+$[;</p> </td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while ($ARGV = shift) {</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>open(ARGV, $ARGV);</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>while (&lt;ARGV&gt;) {</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>...</p></td>
+<td width="8%">
+</td>
+<td width="54%">
+
+
+<p># code for each line</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">except that it
+isn&rsquo;t as cumbersome to say. It really does shift array
+ARGV and put the current filename into variable ARGV. It
+also uses filehandle ARGV internally. You can modify @ARGV
+before the first &lt;&gt; as long as you leave the first
+filename at the beginning of the array. Line numbers ($.)
+continue as if the input was one big happy file. (But see
+example under eof for how to reset line numbers on each
+file.)</p>
+
+<p style="margin-left:11%; margin-top: 1em">If you want to
+set @ARGV to your own list of files, go right ahead. If you
+want to pass switches into your script, you can put a loop
+on the front like this:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while ($_ = $ARGV[0], /^&minus;/) {</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>shift;</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>last if /^&minus;&minus;$/;</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>/^&minus;D(.*)/ &amp;&amp; ($debug = $1);</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>/^&minus;v/ &amp;&amp; $verbose++;</p></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>...</p></td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p># other switches</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while (&lt;&gt;) {</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>...</p></td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p># code for each line</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="62%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">The &lt;&gt;
+symbol will return FALSE only once. If you call it again
+after this it will assume you are processing another @ARGV
+list, and if you haven&rsquo;t set @ARGV, will input from
+stdin.</p>
+
+<p style="margin-left:11%; margin-top: 1em">If the string
+inside the angle brackets is a reference to a scalar
+variable (e.g. &lt;$foo&gt;), then that variable contains
+the name of the filehandle to input from.</p>
+
+<p style="margin-left:11%; margin-top: 1em">If the string
+inside angle brackets is not a filehandle, it is interpreted
+as a filename pattern to be globbed, and either an array of
+filenames or the next filename in the list is returned,
+depending on context. One level of $ interpretation is done
+first, but you can&rsquo;t say &lt;$foo&gt; because
+that&rsquo;s an indirect filehandle as explained in the
+previous paragraph. You could insert curly brackets to force
+interpretation as a filename glob: &lt;${foo}&gt;.
+Example:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while (&lt;*.c&gt;) {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>chmod 0644,$_;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="77%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">is equivalent
+to</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>open(foo,&quot;echo *.c &#9130; tr -s &rsquo;
+\t\r\f&rsquo;
+&rsquo;\\012\\012\\012\\012&rsquo;&#9130;&quot;);</p> </td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while (&lt;foo&gt;) {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>chop;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>chmod 0644,$_;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="77%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">In fact,
+it&rsquo;s currently implemented that way. (Which means it
+will not work on filenames with spaces in them.) Of course,
+the shortest way to do the above is:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>chmod 0644,&lt;*.c&gt;;</p></td></tr>
+</table>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Syntax</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">A <i>perl</i>
+script consists of a sequence of declarations and commands.
+The only things that need to be declared in <i>perl</i> are
+report formats and subroutines. See the sections below for
+more information on those declarations. All objects are
+assumed to start with a null or 0 value. The sequence of
+commands is executed just once, unlike in <i>sed</i> and
+<i>awk</i> scripts, where the sequence of commands is
+executed for each input line. While this means that you must
+explicitly loop over the lines of your input file (or
+files), it also means you have much more control over which
+files and which lines you look at. (Actually, I&rsquo;m
+lying--it is possible to do an implicit loop with either the
+<b>&minus;n</b> or <b>&minus;p</b> switch.)</p>
+
+<p style="margin-left:11%; margin-top: 1em">A declaration
+can be put anywhere a command can, but has no effect on the
+execution of the primary sequence of commands. Typically all
+the declarations are put at the beginning or the end of the
+script.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><i>Perl</i> is,
+for the most part, a free-form language. (The only exception
+to this is format declarations, for fairly obvious reasons.)
+Comments are indicated by the # character, and extend to the
+end of the line. If you attempt to use /* */ C comments, it
+will be interpreted either as division or pattern matching,
+depending on the context. So don&rsquo;t do that.</p>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Compound
+statements</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">In <i>perl</i>,
+a sequence of commands may be treated as one command by
+enclosing it in curly brackets. We will call this a
+BLOCK.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The following
+compound commands may be used to control flow:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>if (EXPR) BLOCK</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>if (EXPR) BLOCK else BLOCK</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>if (EXPR) BLOCK elsif (EXPR) BLOCK ... else BLOCK</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>LABEL while (EXPR) BLOCK</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>LABEL while (EXPR) BLOCK continue BLOCK</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>LABEL for (EXPR; EXPR; EXPR) BLOCK</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>LABEL foreach VAR (ARRAY) BLOCK</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>LABEL BLOCK continue BLOCK</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">Note that,
+unlike C and Pascal, these are defined in terms of BLOCKs,
+not statements. This means that the curly brackets are
+<i>required</i>--no dangling statements allowed. If you want
+to write conditionals without curly brackets there are
+several other ways to do it. The following all do the same
+thing:</p>
+
+<p style="margin-left:11%; margin-top: 1em">if (!open(foo))
+{ die &quot;Can&rsquo;t open $foo&quot;; } <br>
+die &quot;Can&rsquo;t open $foo&quot; unless open(foo);</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+
+
+<p>open(foo) &#9130;&#9130; die &quot;Can&rsquo;t open
+$foo&quot;;</p> <td width="17%"></td>
+<td width="-9%"></td>
+<td width="54%"></td>
+<td width="7%"></td>
+<td width="31%">
+
+
+<p># foo or bust!</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">open(foo) ? die
+&quot;Can&rsquo;t open $foo&quot; : &rsquo;hi
+mom&rsquo;;</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="69%">
+
+
+<p># a bit exotic, that last one</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">The <i>if</i>
+statement is straightforward. Since BLOCKs are always
+bounded by curly brackets, there is never any ambiguity
+about which <i>if</i> an <i>else</i> goes with. If you use
+<i>unless</i> in place of <i>if</i>, the sense of the test
+is reversed.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The
+<i>while</i> statement executes the block as long as the
+expression is true (does not evaluate to the null string or
+0). The LABEL is optional, and if present, consists of an
+identifier followed by a colon. The LABEL identifies the
+loop for the loop control statements <i>next</i>,
+<i>last</i> and <i>redo</i> (see below). If there is a
+<i>continue</i> BLOCK, it is always executed just before the
+conditional is about to be evaluated again, similarly to the
+third part of a <i>for</i> loop in C. Thus it can be used to
+increment a loop variable, even when the loop has been
+continued via the <i>next</i> statement (similar to the C
+&quot;continue&quot; statement).</p>
+
+<p style="margin-left:11%; margin-top: 1em">If the word
+<i>while</i> is replaced by the word <i>until</i>, the sense
+of the test is reversed, but the conditional is still tested
+before the first iteration.</p>
+
+<p style="margin-left:11%; margin-top: 1em">In either the
+<i>if</i> or the <i>while</i> statement, you may replace
+&quot;(EXPR)&quot; with a BLOCK, and the conditional is true
+if the value of the last command in that block is true.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The <i>for</i>
+loop works exactly like the corresponding <i>while</i>
+loop:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>for ($i = 1; $i &lt; 10; $i++) {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>...</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="77%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">is the same
+as</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>$i = 1;</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while ($i &lt; 10) {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>...</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>} continue {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>$i++;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="77%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">The foreach
+loop iterates over a normal array value and sets the
+variable VAR to be each element of the array in turn. The
+&quot;foreach&quot; keyword is actually identical to the
+&quot;for&quot; keyword, so you can use &quot;foreach&quot;
+for readability or &quot;for&quot; for brevity. If VAR is
+omitted, $_ is set to each value. If ARRAY is an actual
+array (as opposed to an expression returning an array
+value), you can modify each element of the array by
+modifying VAR inside the loop. Examples:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>for (@ary) { s/foo/bar/; }</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>foreach $elem (@elements) {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>$elem *= 2;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>for ((10,9,8,7,6,5,4,3,2,1,&rsquo;BOOM&rsquo;)) {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>print $_,&quot;\n&quot;; sleep(1);</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>foreach $item
+(split(/:[\\\n:]*/,$ENV{&rsquo;TERMCAP&rsquo;}) {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>print &quot;Item: $item\n&quot;;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="77%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">The BLOCK by
+itself (labeled or not) is equivalent to a loop that
+executes once. Thus you can use any of the loop control
+statements in it to leave or restart the block. The
+<i>continue</i> block is optional. This construct is
+particularly nice for doing case structures.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>foo: {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>if (/abc/) { $abc = 1; last foo; }</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>if (/def/) { $def = 1; last foo; }</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>if (/xyz/) { $xyz = 1; last foo; }</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>$nothing = 1;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="77%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">It&rsquo;s also
+nice for exiting subroutines early. Note the double curly
+brackets:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>sub tokenize {{</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>...</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>if (/foo/) {</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>23;</p></td>
+<td width="8%">
+</td>
+<td width="54%">
+
+
+<p># return value</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>last;</p></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="8%">
+
+
+<p>...</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}}</p></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em"><b>Simple
+statements</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">The only kind
+of simple statement is an expression evaluated for its side
+effects. Every expression (simple statement) must be
+terminated with a semicolon. Note that this is like C, but
+unlike Pascal (and <i>awk</i>).</p>
+
+<p style="margin-left:11%; margin-top: 1em">Any simple
+statement may optionally be followed by a single modifier,
+just before the terminating semicolon. The possible
+modifiers are:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>if EXPR</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>unless EXPR</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>while EXPR</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>until EXPR</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">The <i>if</i>
+and <i>unless</i> modifiers have the expected semantics. The
+<i>while</i> and <i>until</i> modifiers also have the
+expected semantics (conditional evaluated first), except
+when applied to a do-BLOCK command, in which case the block
+executes once before the conditional is evaluated. This is
+so that you can write loops like:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>do {</p></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>$_ = &lt;stdin&gt;;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="8%">
+</td>
+<td width="77%">
+
+
+<p>...</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>} until $_ eq &quot;.\n&quot;;</p></td>
+<td width="77%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">(See the
+<i>do</i> operator below. Note also that the loop control
+commands described later will NOT work in this construct,
+since modifiers don&rsquo;t take loop labels. Sorry.)</p>
+
+
+<p style="margin-left:11%; margin-top: 1em"><b>Expressions</b></p>
+
+<p style="margin-left:11%; margin-top: 1em">Since
+<i>perl</i> expressions work almost exactly like C
+expressions, only the differences will be mentioned
+here.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Here&rsquo;s
+what <i>perl</i> has that C doesn&rsquo;t:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em">()</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p style="margin-top: 1em">The null list, used to
+initialize an array to null.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>.</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>Concatenation of two strings.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>.=</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>The corresponding assignment operator.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>eq</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>String equality (== is numeric equality). For a mnemonic
+just think of &quot;eq&quot; as a string. (If you are used
+to the <i>awk</i> behavior of using == for either string or
+numeric equality based on the current form of the
+comparands, beware! You must be explicit here.)</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>ne</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>String inequality (!= is numeric inequality).</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>lt</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>String less than.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>gt</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>String greater than.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>le</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>String less than or equal.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>ge</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>String greater than or equal.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>=~</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>Certain operations search or modify the string
+&quot;$_&quot; by default. This operator makes that kind of
+operation work on some other string. The right argument is a
+search pattern, substitution, or translation. The left
+argument is what is supposed to be searched, substituted, or
+translated instead of the default &quot;$_&quot;. The return
+value indicates the success of the operation. (If the right
+argument is an expression other than a search pattern,
+substitution, or translation, it is interpreted as a search
+pattern at run time. This is less efficient than an explicit
+search, since the pattern must be compiled every time the
+expression is evaluated.) The precedence of this operator is
+lower than unary minus and autoincrement/decrement, but
+higher than everything else.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>!~</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>Just like =~ except the return value is negated.</p></td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>x</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>The repetition operator. Returns a string consisting of
+the left operand repeated the number of times specified by
+the right operand.</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">print
+&rsquo;-&rsquo; x 80; # print row of dashes</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="16%"></td>
+<td width="7%">
+
+
+<p>print &rsquo;-&rsquo; x80;</p></td>
+<td width="8%">
+</td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="23%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="16%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p># illegal, x80 is identifier</p></td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="23%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="16%"></td>
+<td width="7%">
+
+
+<p>print &quot;\t&quot; x ($tab/8), &rsquo; &rsquo; x
+($tab%8);</p> </td>
+<td width="8%"></td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="23%">
+
+
+<p># tab over</p></td></tr>
+</table>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em">x=</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p style="margin-top: 1em">The corresponding assignment
+operator.</p> </td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p>..</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p>The range operator, which is bistable. Each .. operator
+maintains its own boolean state. It is false as long as its
+left operand is false. Once the left operand is true, the
+range operator stays true until the right operand is true,
+AFTER which the range operator becomes false again. (It
+doesn&rsquo;t become false till the next time the range
+operator evaluated. It can become false on the same
+evaluation it became true, but it still returns true once.)
+The right operand is not evaluated while the operator is in
+the &quot;false&quot; state, and the left operand is not
+evaluated while the operator is in the &quot;true&quot;
+state. The .. operator is primarily intended for doing line
+number ranges after the fashion of <i>sed</i> or <i>awk</i>.
+The precedence is a little lower than &#9130;&#9130; and
+&amp;&amp;. The value returned is either the null string for
+false, or a sequence number (beginning with 1) for true. The
+sequence number is reset for each range encountered. The
+final sequence number in a range has the string
+&rsquo;E0&rsquo; appended to it, which doesn&rsquo;t affect
+its numeric value, but gives you something to search for if
+you want to exclude the endpoint. You can exclude the
+beginning point by waiting for the sequence number to be
+greater than 1. If either operand of .. is static, that
+operand is implicitly compared to the $. variable, the
+current line number. Examples:</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">if (101 .. 200)
+{ print; } # print 2nd hundred lines</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+
+
+<p>next line if (1 .. /^$/);</p><td width="29%"></td>
+<td width="-21%"></td>
+<td width="38%"></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="38%">
+
+
+<p># skip header lines</p>
+
+<p style="margin-top: 1em">s/^/&gt; / if (/^$/ ..
+eof());</p> </td></tr>
+<tr valign="top" align="left">
+<td width="29%"></td>
+<td width="-21%"></td>
+<td width="38%"></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="38%">
+
+
+<p># quote body</p></td></tr>
+</table>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="3%">
+
+
+<p style="margin-top: 1em">&minus;x</p></td>
+<td width="9%"></td>
+<td width="77%">
+
+
+<p style="margin-top: 1em">A file test. This unary operator
+takes one argument, either a filename or a filehandle, and
+tests the associated file to see if something is true about
+it. If the argument is omitted, tests $_, except for
+&minus;t, which tests stdin. It returns 1 for true and
+&rsquo;&rsquo; for false. Precedence is higher than logical
+and relational operators, but lower than arithmetic
+operators. The operator may be any of:</p></td></tr>
+</table>
+
+<p style="margin-left:23%;">&minus;r File is readable by
+effective uid.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;w</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is writeable by effective uid.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;x</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is executable by effective uid.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;o</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is owned by effective uid.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;R</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is readable by real uid.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;W</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is writeable by real uid.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;X</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is executable by real uid.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;O</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is owned by real uid.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;e</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File exists.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;z</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File has zero size.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;s</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File has non-zero size.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;f</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a plain file.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;d</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a directory.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;l</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a symbolic link.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;p</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a named pipe (FIFO).</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;S</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a socket.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;b</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a block special file.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;c</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a character special file.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;u</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File has setuid bit set.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;g</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File has setgid bit set.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;k</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File has sticky bit set.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;t</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>Filehandle is opened to a tty.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;T</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a text file.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>&minus;B</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>File is a binary file (opposite of &minus;T).</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">The
+interpretation of the file permission operators &minus;r,
+&minus;R, &minus;w, &minus;W, &minus;x and &minus;X is based
+solely on the mode of the file and the uids and gids of the
+user. There may be other reasons you can&rsquo;t actually
+read, write or execute the file. Also note that, for the
+superuser, &minus;r, &minus;R, &minus;w and &minus;W always
+return 1, and &minus;x and &minus;X return 1 if any execute
+bit is set in the mode. Scripts run by the superuser may
+thus need to do a stat() in order to determine the actual
+mode of the file, or temporarily set the uid to something
+else.</p>
+
+<p style="margin-left:23%; margin-top: 1em">Example:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while (&lt;&gt;) {</p></td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>chop;</p></td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>next unless &minus;f $_;</p></td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+
+
+<p># ignore specials</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>...</p></td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="23%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">Note that
+-s/a/b/ does not do a negated substitution. Saying
+-exp($foo) still works as expected, however--only single
+letters following a minus are interpreted as file tests.</p>
+
+<p style="margin-left:23%; margin-top: 1em">The &minus;T
+and &minus;B switches work as follows. The first block or so
+of the file is examined for odd characters such as strange
+control codes or metacharacters. If too many odd characters
+(&gt;10%) are found, it&rsquo;s a &minus;B file, otherwise
+it&rsquo;s a &minus;T file. Also, any file containing null
+in the first block is considered a binary file. If &minus;T
+or &minus;B is used on a filehandle, the current stdio
+buffer is examined rather than the first block. Since input
+doesn&rsquo;t work well on binary files you should probably
+test a filehandle before doing any input if you&rsquo;re
+unsure of the nature of the filehandle you&rsquo;ve been
+handed (usually via stdin). Both &minus;T and &minus;B
+return TRUE on a null file, or a file at EOF when testing a
+filehandle.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Here is what C
+has that <i>perl</i> doesn&rsquo;t:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="11%">
+
+
+<p style="margin-top: 1em">unary &amp;</p></td>
+<td width="7%"></td>
+<td width="45%">
+
+
+<p style="margin-top: 1em">Address-of operator.</p></td>
+<td width="26%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="11%">
+
+
+<p>unary *</p></td>
+<td width="7%"></td>
+<td width="45%">
+
+
+<p>Dereference-address operator.</p></td>
+<td width="26%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="11%">
+
+
+<p>(TYPE)</p></td>
+<td width="7%"></td>
+<td width="45%">
+
+
+<p>Type casting operator.</p></td>
+<td width="26%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">Like C,
+<i>perl</i> does a certain amount of expression evaluation
+at compile time, whenever it determines that all of the
+arguments to an operator are static and have no side
+effects. In particular, string concatenation happens at
+compile time between literals that don&rsquo;t do variable
+substitution. Backslash interpretation also happens at
+compile time. You can say</p>
+
+<p style="margin-left:11%; margin-top: 1em">&rsquo;Now is
+the time for all&rsquo; . &quot;\n&quot; .</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>&rsquo;good men to come to.&rsquo;</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">and this all
+reduces to one string internally.</p>
+
+<p style="margin-left:11%; margin-top: 1em">The
+autoincrement operator has a little extra built-in magic to
+it. If you increment a variable that is numeric, or that has
+ever been used in a numeric context, you get a normal
+increment. If, however, the variable has only been used in
+string contexts since it was set, and has a value that is
+not null and matches the pattern /^[a-zA-Z]*[0-9]*$/, the
+increment is done as a string, preserving each character
+within its range, with carry:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="31%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>print ++($foo = &rsquo;99&rsquo;);</p></td>
+<td width="31%"></td>
+<td width="8%"></td>
+<td width="46%">
+
+
+<p># prints &rsquo;100&rsquo;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="31%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>print ++($foo = &rsquo;a0&rsquo;);</p></td>
+<td width="31%"></td>
+<td width="8%"></td>
+<td width="46%">
+
+
+<p># prints &rsquo;a1&rsquo;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="31%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>print ++($foo = &rsquo;Az&rsquo;);</p></td>
+<td width="31%"></td>
+<td width="8%"></td>
+<td width="46%">
+
+
+<p># prints &rsquo;Ba&rsquo;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="31%"></td>
+<td width="8%"></td>
+<td width="46%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>print ++($foo = &rsquo;zz&rsquo;);</p></td>
+<td width="31%"></td>
+<td width="8%"></td>
+<td width="46%">
+
+
+<p># prints &rsquo;aaa&rsquo;</p></td></tr>
+</table>
+
+<p style="margin-left:11%; margin-top: 1em">The
+autodecrement is not magical.</p>
+
+<p style="margin-left:11%; margin-top: 1em">Along with the
+literals and variables mentioned earlier, the following
+operations can serve as terms in an expression. Some of
+these operations take a LIST as an argument. Such a list can
+consist of any combination of scalar arguments or arrays;
+the arrays will be included in the list as if each
+individual element were interpolated at that point in the
+list. <br>
+/PATTERN/i</p>
+
+<p style="margin-left:23%;">Searches a string for a
+pattern, and returns true (1) or false (&rsquo;&rsquo;). If
+no string is specified via the =~ or !~ operator, the $_
+string is searched. (The string specified with =~ need not
+be an lvalue--it may be the result of an expression
+evaluation, but remember the =~ binds rather tightly.) See
+also the section on regular expressions.</p>
+
+<p style="margin-left:23%; margin-top: 1em">If you prepend
+an &lsquo;m&rsquo; you can use any pair of characters as
+delimiters. This is particularly useful for matching Unix
+path names that contain &lsquo;/&rsquo;. If the final
+delimiter is followed by the optional letter
+&lsquo;i&rsquo;, the matching is done in a case-insensitive
+manner.</p>
+
+<p style="margin-left:23%; margin-top: 1em">If used in a
+context that requires an array value, a pattern match
+returns an array consisting of the subexpressions matched by
+the parens in pattern, i.e. ($1, $2, $3...).</p>
+
+<p style="margin-left:23%; margin-top: 1em">Examples:</p>
+
+<p style="margin-left:23%; margin-top: 1em">open(tty,
+&rsquo;/dev/tty&rsquo;);</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+
+
+<p>&lt;tty&gt; =~ /^y/i &amp;&amp; do foo();</p><td width="29%"></td>
+<td width="-21%"></td>
+<td width="46%"></td>
+<td width="8%"></td>
+<td width="38%">
+
+
+<p># do foo if desired</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">if (/Version:
+*([0-9.]*)/) { $version = $1; }</p>
+
+<p style="margin-left:23%; margin-top: 1em">next if
+m#^/usr/spool/uucp#;</p>
+
+<p style="margin-left:23%; margin-top: 1em">if
+(($F1,$F2,$Etc) = ($foo =~ /^(\S+)\s+(\S+)\s*(.*)/))</p>
+
+<p style="margin-left:23%; margin-top: 1em">This last
+example splits $foo into the first two words and the
+remainder of the line, and assigns those three fields to
+$F1, $F2 and $Etc. The conditional is true if any variables
+were assigned, i.e. if the pattern matched.</p>
+
+<p style="margin-left:11%;">?PATTERN?</p>
+
+<p style="margin-left:23%;">This is just like the /pattern/
+search, except that it matches only once between calls to
+the <i>reset</i> operator. This is a useful optimization
+when you only want to see the first occurence of something
+in each file of a set of files, for instance.</p>
+
+<p style="margin-left:11%;">chdir EXPR</p>
+
+<p style="margin-left:23%;">Changes the working directory
+to EXPR, if possible. Returns 1 upon success, 0 otherwise.
+See example under die().</p>
+
+<p style="margin-left:11%;">chmod LIST</p>
+
+<p style="margin-left:23%;">Changes the permissions of a
+list of files. The first element of the list must be the
+numerical mode. Returns the number of files successfully
+changed.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>$cnt = chmod
+0755,&rsquo;foo&rsquo;,&rsquo;bar&rsquo;;</p> </td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>chmod 0755,@executables;</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">chop(VARIABLE)</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="6%">
+
+
+<p>chop</p></td>
+<td width="6%"></td>
+<td width="77%">
+
+
+<p>Chops off the last character of a string and returns it.
+It&rsquo;s used primarily to remove the newline from the end
+of an input record, but is much more efficient than s/\n//
+because it neither scans nor copies the string. If VARIABLE
+is omitted, chops $_. Example:</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">while
+(&lt;&gt;) {</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p>chop;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="62%">
+
+
+<p># avoid \n on last field</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p>@array = split(/:/);</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%"></td>
+<td width="7%">
+</td>
+<td width="62%">
+
+
+<p>...</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>}</p></td>
+<td width="62%">
+</td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">You can
+actually chop anything that&rsquo;s an lvalue, including an
+assignment:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>chop($cwd = &lsquo;pwd&lsquo;);</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">chown LIST</p>
+
+<p style="margin-left:23%;">Changes the owner (and group)
+of a list of files. The first two elements of the list must
+be the NUMERICAL uid and gid, in that order. Returns the
+number of files successfully changed.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>$cnt = chown
+$uid,$gid,&rsquo;foo&rsquo;,&rsquo;bar&rsquo;;</p> </td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>chown $uid,$gid,@filenames;</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">Here&rsquo;s an
+example of looking up non-numeric uids:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>print &quot;User: &quot;;</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>$user = &lt;stdin&gt;;</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>chop($user);</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>print &quot;Files: &quot;</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>$pattern = &lt;stdin&gt;;</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>chop($pattern);</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>open(pass,&rsquo;/etc/passwd&rsquo;) &#9130;&#9130; die
+&quot;Can&rsquo;t open passwd&quot;;</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>while (&lt;pass&gt;) {</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%">
+
+
+<p>($login,$pass,$uid,$gid) = split(/:/);</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%">
+
+
+<p>$uid{$login} = $uid;</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%">
+
+
+<p>$gid{$login} = $gid;</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>@ary = &lt;$pattern&gt;;</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+
+
+<p># get filenames</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>if ($uid{$user} eq &rsquo;&rsquo;) {</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%">
+
+
+<p>die &quot;$user not in passwd file&quot;;</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>else {</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%">
+
+
+<p>unshift(@ary,$uid{$user},$gid{$user});</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="15%"></td>
+<td width="8%">
+
+
+<p>chown @ary;</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="15%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;">close(FILEHANDLE) <br>
+close FILEHANDLE</p>
+
+<p style="margin-left:23%;">Closes the file or pipe
+associated with the file handle. You don&rsquo;t have to
+close FILEHANDLE if you are immediately going to do another
+open on it, since open will close it for you. (See
+<i>open</i>.) However, an explicit close on an input file
+resets the line counter ($.), while the implicit close done
+by <i>open</i> does not. Also, closing a pipe will wait for
+the process executing on the pipe to complete, in case you
+want to look at the output of the pipe afterwards.
+Example:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>open(output,&rsquo;&#9130;sort &gt;foo&rsquo;);</p></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="38%">
+
+
+<p># pipe to sort</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>...</p></td>
+<td width="8%">
+
+
+<p># print stuff to output</p></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="38%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>close(output);</p></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="38%">
+
+
+<p># wait for sort to finish</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="8%"></td>
+<td width="7%">
+
+
+<p>open(input,&rsquo;foo&rsquo;);</p></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="8%"></td>
+<td width="38%">
+
+
+<p># get sort&rsquo;s results</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">FILEHANDLE may
+be an expression whose value gives the real filehandle
+name.</p>
+
+<p style="margin-left:11%;">crypt(PLAINTEXT,SALT)</p>
+
+<p style="margin-left:23%;">Encrypts a string exactly like
+the crypt() function in the C library. Useful for checking
+the password file for lousy passwords. Only the guys wearing
+white hats should do this.</p>
+
+<p style="margin-left:11%;">delete $ASSOC{KEY}</p>
+
+<p style="margin-left:23%;">Deletes the specified value
+from the specified associative array. Returns the deleted
+value; The following deletes all the values of an
+associative array:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>foreach $key (keys(ARRAY)) {</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>delete $ARRAY{$key};</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>}</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">(But it would
+be faster to use the reset command.)</p>
+
+<p style="margin-left:11%;">die EXPR</p>
+
+<p style="margin-left:23%;">Prints the value of EXPR to
+stderr and exits with the current value of $! (errno). If $!
+is 0, exits with the value of ($? &gt;&gt; 8)
+(&lsquo;command&lsquo; status). If ($? &gt;&gt; 8) is 0,
+exits with 255. Equivalent examples:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>die &quot;Can&rsquo;t cd to spool.\n&quot; unless chdir
+&rsquo;/usr/spool/news&rsquo;;</p> </td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>chdir &rsquo;/usr/spool/news&rsquo; &#9130;&#9130; die
+&quot;Can&rsquo;t cd to spool.\n&quot;</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">If the value of
+EXPR does not end in a newline, the current script line
+number and input line number (if any) are also printed, and
+a newline is supplied. Hint: sometimes appending &quot;,
+stopped&quot; to your message will cause it to make better
+sense when the string &quot;at foo line 123&quot; is
+appended. Suppose you are running script
+&quot;canasta&quot;.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>die &quot;/etc/games is no good&quot;;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>die &quot;/etc/games is no good, stopped&quot;;</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">produce,
+respectively</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>/etc/games is no good at canasta line 123.</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>/etc/games is no good, stopped at canasta line 123.</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">See also
+<i>exit</i>.</p>
+
+<p style="margin-left:11%;">do BLOCK</p>
+
+<p style="margin-left:23%;">Returns the value of the last
+command in the sequence of commands indicated by BLOCK. When
+modified by a loop modifier, executes the BLOCK once before
+testing the loop condition. (On other statements the loop
+modifiers test the conditional first.)</p>
+
+<p style="margin-left:11%;">do SUBROUTINE (LIST)</p>
+
+<p style="margin-left:23%;">Executes a SUBROUTINE declared
+by a <i>sub</i> declaration, and returns the value of the
+last expression evaluated in SUBROUTINE. If you pass arrays
+as part of LIST you may wish to pass the length of the array
+in front of each array. (See the section on subroutines
+later on.) SUBROUTINE may be a scalar variable, in which
+case the variable contains the name of the subroutine to
+execute. The parentheses are required to avoid confusion
+with the next form of &quot;do&quot;.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="11%">
+
+
+<p>do EXPR</p></td>
+<td width="1%"></td>
+<td width="77%">
+
+
+<p>Uses the value of EXPR as a filename and executes the
+contents of the file as a perl script. It&rsquo;s primary
+use is to include subroutines from a perl subroutine
+library.</p> </td></tr>
+</table>
+
+<p style="margin-left:23%;">do &rsquo;stat.pl&rsquo;;</p>
+
+<p style="margin-left:23%; margin-top: 1em">is just
+like</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="92%">
+
+
+<p>eval &lsquo;cat stat.pl&lsquo;;</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">except that
+it&rsquo;s more efficient, more concise, keeps track of the
+current filename for error messages, and searches all the -I
+libraries if the file isn&rsquo;t in the current directory
+(see also the @INC array in Predefined Names). It&rsquo;s
+the same, however, in that it does reparse the file every
+time you call it, so if you are going to use the file inside
+a loop you might prefer to use #include, at the expense of a
+little more startup time. (The main problem with #include is
+that cpp doesn&rsquo;t grok # comments--a workaround is to
+use &quot;;#&quot; for standalone comments.) Note that the
+following are NOT equivalent:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>do $foo;</p></td>
+<td width="62%">
+
+
+<p># eval a file</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%">
+
+
+<p>do $foo();</p></td>
+<td width="62%">
+
+
+<p># call a subroutine</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">each(ASSOC_ARRAY)</p>
+
+<p style="margin-left:23%;">Returns a 2 element array
+consisting of the key and value for the next value of an
+associative array, so that you can iterate over it. Entries
+are returned in an apparently random order. When the array
+is entirely read, a null array is returned (which when
+assigned produces a FALSE (0) value). The next call to
+each() after that will start iterating again. The iterator
+can be reset only by reading all the elements from the
+array. You must not modify the array while iterating over
+it. There is a single iterator for each associative array,
+shared by all each(), keys() and values() function calls in
+the program. The following prints out your environment like
+the printenv program, only in a different order:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>while (($key,$value) = each(ENV)) {</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>print &quot;$key=$value\n&quot;;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>}</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">See also keys()
+and values().</p>
+
+<p style="margin-left:11%;">eof(FILEHANDLE)</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="4%">
+
+
+<p>eof</p></td>
+<td width="8%"></td>
+<td width="77%">
+
+
+<p>Returns 1 if the next read on FILEHANDLE will return end
+of file, or if FILEHANDLE is not open. FILEHANDLE may be an
+expression whose value gives the real filehandle name. An
+eof without an argument returns the eof status for the last
+file read. Empty parentheses () may be used to indicate the
+pseudo file formed of the files listed on the command line,
+i.e. eof() is reasonable to use inside a while (&lt;&gt;)
+loop to detect the end of only the last file. Use eof(ARGV)
+or eof without the parens to test EACH file in a while
+(&lt;&gt;) loop. Examples:</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em"># insert dashes
+just before last line of last file</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>while (&lt;&gt;) {</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>if (eof()) {</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="54%">
+
+
+<p>print &quot;--------------\n&quot;;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>print;</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p># reset line numbering on each input file</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>while (&lt;&gt;) {</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>print &quot;$.\t$_&quot;;</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>if (eof) {</p></td>
+<td width="54%">
+
+
+<p># Not eof().</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%">
+</td>
+<td width="54%">
+
+
+<p>close(ARGV);</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+</td>
+<td width="7%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="54%">
+</td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="8%">
+
+
+<p>}</p></td>
+<td width="7%"></td>
+<td width="8%"></td>
+<td width="54%">
+</td></tr>
+</table>
+
+<p style="margin-left:11%;">eval EXPR</p>
+
+<p style="margin-left:23%;">EXPR is parsed and executed as
+if it were a little perl program. It is executed in the
+context of the current perl program, so that any variable
+settings, subroutine or format definitions remain
+afterwards. The value returned is the value of the last
+expression evaluated, just as with subroutines. If there is
+a syntax error or runtime error, a null string is returned
+by eval, and $@ is set to the error message. If there was no
+error, $@ is null. If EXPR is omitted, evaluates $_.</p>
+
+<p style="margin-left:11%;">exec LIST</p>
+
+<p style="margin-left:23%;">If there is more than one
+argument in LIST, calls execvp() with the arguments in LIST.
+If there is only one argument, the argument is checked for
+shell metacharacters. If there are any, the entire argument
+is passed to /bin/sh -c for parsing. If there are none, the
+argument is split into words and passed directly to
+execvp(), which is more efficient. Note: exec (and system)
+do not flush your output buffer, so you may need to set
+$&#9130; to avoid lost output. Examples:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>exec &rsquo;/bin/echo&rsquo;, &rsquo;Your arguments are:
+&rsquo;, @ARGV;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>exec &quot;sort $outfile &#9130; uniq&quot;;</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">exit EXPR</p>
+
+<p style="margin-left:23%;">Evaluates EXPR and exits
+immediately with that value. Example:</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>$ans = &lt;stdin&gt;;</p></td></tr>
+<tr valign="top" align="left">
+<td width="8%"></td>
+<td width="7%"></td>
+<td width="85%">
+
+
+<p>exit 0 if $ans =~ /^[Xx]/;</p></td></tr>
+</table>
+
+<p style="margin-left:23%; margin-top: 1em">See also
+<i>die</i>.</p>
+
+<p style="margin-left:11%;">exp(EXPR)</p>
+
+<p style="margin-left:23%;">Returns e to the power of
+EXPR.</p>
+
+<table width="100%" border="0" rules="none" frame="void"
+       cellspacing="0" cellpadding="0">
+<tr valign="top" align="left">
+<td width="11%"></td>
+<td width="6%">
+
+
+<p>fork</p></td>
+<td width="6%"></td>
+<td width="77%">
+
+
+<p>Does a fork() call. Returns the child pid to the parent
+process and 0 to the child process. Note: unflushed buffers
+remain unflushed in both processes, which means you may need
+to set $&#9130; to avoid duplicate output.</p></td></tr>
+</table>
+
+<p style="margin-left:11%;">gmtime(EXPR)</p>
+
+<p style="margin-left:23%;">Converts a time as returned by
+the time function to a 9-element array with the time
+analyzed for the Greenwich timezone. Typically used as
+follows:</p>
+
+
+<p style="margin-left:23%; margin-top: 1em">($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst)
+<br>
+= gmtime(time);</p>
+
+<p style="margin-left:23%; margin-top: 1em">All array
+elements are numeric, and come straight out of a struct tm.
+In particular this means that $mon has the range 0..11 and
+$wday has the range 0..6.</p>
+<hr>
+</body>
+</html>
